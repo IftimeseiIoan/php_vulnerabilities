@@ -1,0 +1,72 @@
+{
+    "name": "Aikido Security App - Node.js",
+    "image": "mcr.microsoft.com/devcontainers/javascript-node:1-20-bullseye",
+    
+    // Configure tool-specific properties
+    "customizations": {
+      "vscode": {
+        "extensions": [
+          "dbaeumer.vscode-eslint",
+          "esbenp.prettier-vscode",
+          "Vue.volar",
+          "Vue.vscode-typescript-vue-plugin",
+          "bradlc.vscode-tailwindcss",
+          "ms-azuretools.vscode-docker"
+        ],
+        "settings": {
+          "editor.formatOnSave": true,
+          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "[vue]": {
+            "editor.defaultFormatter": "Vue.volar"
+          },
+          "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": "explicit"
+          }
+        }
+      }
+    },
+  
+    // Forward ports for frontend and backend
+    "forwardPorts": [3000, 3001],
+    "portsAttributes": {
+      "3000": {
+        "label": "Frontend (Vite)",
+        "onAutoForward": "notify"
+      },
+      "3001": {
+        "label": "Backend API",
+        "onAutoForward": "silent"
+      }
+    },
+  
+    // Install dependencies after container creation
+    "postCreateCommand": "cd backend && npm install && cd ../frontend && npm install",
+  
+    // Use 'postStartCommand' to run the application if desired
+    // "postStartCommand": "./start.sh",
+  
+    // Set environment variables
+    "remoteEnv": {
+      "NODE_ENV": "development"
+    },
+  
+    // Features to add to the dev container
+    "features": {
+      "ghcr.io/devcontainers/features/node:1": {
+        "version": "20"
+      },
+      "ghcr.io/devcontainers/features/git:1": {},
+      "ghcr.io/devcontainers/features/github-cli:1": {}
+    },
+  
+    // Use 'forwardPorts' to make a list of ports inside the container available locally
+    "mounts": [
+      "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached"
+    ],
+  
+    // Set the default shell
+    "shell": "/bin/bash",
+  
+    // Run as non-root user
+    "remoteUser": "node"
+  }
